@@ -1,14 +1,59 @@
-import { Router } from 'express';
-import { mensajeController } from '../controller/mensajeController';
+import { Request, Response } from 'express';
+import { mensajeService } from '../services/mensajeService';
 
-const router = Router();
+// Obtener todos los mensajes de un usuario
+export const obtenerMensajes = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const mensajes = await mensajeService.obtenerMensajes(userId);
+    res.json(mensajes);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener los mensajes' });
+  }
+};
 
-router.post('/enviar', mensajeController.enviarMensaje);
-router.get('/listar/:userId', mensajeController.obtenerMensajes);
-router.get('/no-leidos/:userId', mensajeController.obtenerMensajesNoLeidos);
+// Obtener los mensajes no leídos de un usuario
+export const obtenerMensajesNoLeidos = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const mensajes = await mensajeService.obtenerMensajesNoLeidos(userId);
+    res.json(mensajes);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener los mensajes no leídos' });
+  }
+};
 
-router.post('/etiquetas/:id', mensajeController.crearEtiqueta);
-router.get('/etiquetas/:id', mensajeController.obtenerEtiquetas);
-router.delete('/etiquetas/:id', mensajeController.eliminarEtiqueta);
+// Marcar un mensaje como leído
+export const marcarComoLeido = async (req: Request, res: Response) => {
+  try {
+    const { mensajeId } = req.params;
+    const mensaje = await mensajeService.marcarComoLeido(mensajeId);
+    res.json(mensaje);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al marcar el mensaje como leído' });
+  }
+};
 
-export default router;
+// Crear una nueva etiqueta
+export const crearEtiqueta = async (req: Request, res: Response) => {
+  try {
+    const { mensajeId } = req.params;
+    const { etiqueta } = req.body;
+    const mensaje = await mensajeService.crearEtiqueta(mensajeId, etiqueta);
+    res.json(mensaje);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al crear la etiqueta' });
+  }
+};
+
+// Eliminar una etiqueta
+export const eliminarEtiqueta = async (req: Request, res: Response) => {
+  try {
+    const { mensajeId } = req.params;
+    const { etiqueta } = req.body;
+    const mensaje = await mensajeService.eliminarEtiqueta(mensajeId, etiqueta);
+    res.json(mensaje);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al eliminar la etiqueta' });
+  }
+};
