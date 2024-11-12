@@ -1,18 +1,32 @@
 <div>
-  <h2>Mensajes Recibidos</h2>
-  <ul>
-    <li *ngFor="let mensaje of mensajes">
-      {{ mensaje.contenido }}
-      <!-- Botón para responder a un mensaje -->
-      <button (click)="responderMensaje(mensaje.id, 'Respuesta automática')">Responder</button>
-    </li>
-  </ul>
+  <h2>Mensajes</h2>
+  
+  <div *ngFor="let mensaje of mensajes">
+    <div>
+      <strong>{{ mensaje.remitente.nombre }}</strong>
+      <p>{{ mensaje.contenido }}</p>
+      <p><strong>Etiquetas:</strong> {{ mensaje.etiquetas.join(', ') }}</p>
 
+      <button (click)="marcarComoLeido(mensaje._id)">Marcar como leído</button>
+      
+      <!-- Campo para nueva etiqueta -->
+      <input type="text" [(ngModel)]="etiquetaNueva" placeholder="Nueva etiqueta" />
+      <button (click)="crearEtiqueta(mensaje._id)">Agregar Etiqueta</button>
+      
+      <!-- Eliminar etiqueta -->
+      <div *ngFor="let etiqueta of mensaje.etiquetas">
+        <button (click)="eliminarEtiqueta(mensaje._id, etiqueta)">Eliminar {{ etiqueta }}</button>
+      </div>
+
+      <!-- Responder mensaje -->
+      <input type="text" #respuesta placeholder="Responde al mensaje" />
+      <button (click)="responderMensaje(mensaje._id, respuesta.value)">Responder</button>
+    </div>
+  </div>
+  
+  <!-- Enviar nuevo mensaje -->
   <div>
-    <h3>Nuevo Mensaje</h3>
-    <!-- Campo de texto para escribir un nuevo mensaje -->
     <textarea [(ngModel)]="nuevoMensaje" placeholder="Escribe tu mensaje"></textarea>
-    <button (click)="enviarMensaje()" [disabled]="!nuevoMensaje">Enviar</button>
+    <button (click)="enviarMensaje()">Enviar mensaje</button>
   </div>
 </div>
-
