@@ -15,13 +15,14 @@ export const obtenerMensajes = async (req: Request, res: Response) => {
 // Obtener los mensajes no leídos de un usuario
 export const obtenerMensajesNoLeidos = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
-    const mensajes = await mensajeService.obtenerMensajesNoLeidos(userId);
-    res.json(mensajes);
+    const { userId } = req.params; 
+    const mensajes = await mensajeService.obtenerMensajesNoLeidos(userId); 
+    res.json(mensajes); // Enviar los mensajes como respuesta
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener los mensajes no leídos' });
+    res.status(500).json({ message: 'Error al obtener los mensajes no leídos' }); 
   }
 };
+
 
 // Marcar un mensaje como leído
 export const marcarComoLeido = async (req: Request, res: Response) => {

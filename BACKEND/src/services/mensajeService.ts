@@ -56,6 +56,19 @@ export class MensajeService {
       { new: true }
     );
   }
+
+  // Actualizar una etiqueta en un mensaje
+async actualizarEtiqueta(mensajeId: string, etiquetaVieja: string, etiquetaNueva: string) {
+  return await Mensaje.findByIdAndUpdate(
+    mensajeId,
+    { 
+      $pull: { etiquetas: etiquetaVieja },  
+      $addToSet: { etiquetas: etiquetaNueva }  
+    },
+    { new: true }
+  );
+}
+
 }
 
 export const mensajeService = new MensajeService();
