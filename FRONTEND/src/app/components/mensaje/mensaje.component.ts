@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MensajeService } from '../../services/mensaje.service';
 
-
 @Component({
   selector: 'app-mensaje',
   templateUrl: './mensaje.component.html',
@@ -9,7 +8,7 @@ import { MensajeService } from '../../services/mensaje.service';
 })
 export class MensajeComponent implements OnInit {
   mensajes: any[] = [];
-  nuevoMensaje: string = '';
+  nuevoMensaje: string = ''; // Asegúrate de que esta propiedad esté correctamente inicializada
 
   constructor(private mensajeService: MensajeService) {}
 
@@ -25,21 +24,24 @@ export class MensajeComponent implements OnInit {
 
   enviarMensaje(): void {
     if (this.nuevoMensaje) {
-      this.mensajeService.enviarMensaje({ contenido: this.nuevoMensaje, remitenteId: 'idUsuario', destinatarioId: 'idDestinatario' }).subscribe(() => {
-        this.cargarMensajes();
-        this.nuevoMensaje = '';
+      this.mensajeService.enviarMensaje({
+        contenido: this.nuevoMensaje,
+        remitenteId: 'idUsuario', 
+        destinatarioId: 'idDestinatario'
+      }).subscribe(() => {
+        this.cargarMensajes(); // Recargar los mensajes después de enviar
+        this.nuevoMensaje = ''; // Limpiar el campo de texto después de enviar
       });
     }
   }
 
   responderMensaje(mensajeId: string, respuesta: string): void {
-    this.mensajeService.responderMensaje(mensajeId, { contenido: respuesta, remitenteId: 'idUsuario', destinatarioId: 'idDestinatario' }).subscribe(() => {
-      this.cargarMensajes();
+    this.mensajeService.responderMensaje(mensajeId, {
+      contenido: respuesta, 
+      remitenteId: 'idUsuario', 
+      destinatarioId: 'idDestinatario'
+    }).subscribe(() => {
+      this.cargarMensajes(); // Recargar los mensajes después de responder
     });
   }
 }
-
-
-
-
-
