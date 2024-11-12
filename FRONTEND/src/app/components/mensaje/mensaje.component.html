@@ -1,0 +1,15 @@
+<div>
+    <h2>Mensajes Recibidos</h2>
+    <ul>
+      <li *ngFor="let mensaje of mensajes">
+        {{ mensaje.contenido }}
+        <button (click)="responderMensaje(mensaje.id, 'Respuesta automática')">Responder</button>
+      </li>
+    </ul>
+    <div>
+      <h3>Nuevo Mensaje</h3>
+      <textarea [(ngModel)]="nuevoMensaje" placeholder="Escribe tu mensaje"></textarea>
+      <button (click)="enviarMensaje()">Enviar</button>
+    </div>
+  </div>
+  
