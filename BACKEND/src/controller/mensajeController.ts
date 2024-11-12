@@ -13,9 +13,8 @@ export class MensajeController {
     }
   }
 
+  // hacer el listado de mensajes
   async obtenerMensajes(req: Request, res: Response) {
-
-    //obtencion del mensaje
     try {
       const mensajes = await mensajeService.obtenerMensajes(req.params.userId);
       res.status(200).json(mensajes);
@@ -24,12 +23,41 @@ export class MensajeController {
     }
   }
 
-  async gestionarEtiquetas(req: Request, res: Response) {
+   // hacer el listado de los mensajes que no se han leido
+   async obtenerMensajesNoLeidos(req: Request, res: Response) {
     try {
-      const mensaje = await mensajeService.crearEtiqueta(req.params.id, req.body.etiquetas);
+      const mensajes = await mensajeService.obtenerMensajesNoLeidos(req.params.userId);
+      res.status(200).json(mensajes);
+    } catch (error) {
+      res.status(500).json({ message: 'Error obteniendo mensajes no leídos', error });
+    }
+  }
+
+// Operacions CRUD para la parte de gestión de etiquetas
+async crearEtiqueta(req: Request, res: Response) {
+    try {
+      const mensaje = await mensajeService.crearEtiqueta(req.params.id, req.body.etiqueta);
       res.status(200).json(mensaje);
     } catch (error) {
-      res.status(500).json({ message: 'Error gestionando etiquetas', error });
+      res.status(500).json({ message: 'Error creando etiqueta', error });
+    }
+  }
+
+  async obtenerEtiquetas(req: Request, res: Response) {
+    try {
+      const etiquetas = await mensajeService.obtenerEtiquetas(req.params.id);
+      res.status(200).json(etiquetas);
+    } catch (error) {
+      res.status(500).json({ message: 'Error obteniendo etiquetas', error });
+    }
+  }
+
+  async eliminarEtiqueta(req: Request, res: Response) {
+    try {
+      const mensaje = await mensajeService.eliminarEtiqueta(req.params.id, req.body.etiqueta);
+      res.status(200).json(mensaje);
+    } catch (error) {
+      res.status(500).json({ message: 'Error eliminando etiqueta', error });
     }
   }
 }
