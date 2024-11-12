@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MensajeService } from '../services/mensaje.service';  // Asegúrate de usar la ruta correcta
+import { MensajeService } from '../../services/mensaje.service'; 
+
+
 
 @Component({
   selector: 'app-mensaje',
