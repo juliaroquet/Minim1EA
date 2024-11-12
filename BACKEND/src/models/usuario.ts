@@ -12,5 +12,10 @@ const usuarioSchema = new mongoose.Schema({
   asignaturasImparte: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Asignatura' }]
 }, { versionKey: false });
 
+export interface IUsuario extends Document {
+  nombre: string;
+  email: string;
+  password: string; }
+
 const Usuario = mongoose.model('Usuario', usuarioSchema);
 export default Usuario;
