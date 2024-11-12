@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import usuarioRoutes from './routes/usuarioRoutes';
 import asignaturaRoutes from './routes/asignaturaRoutes';
+import mensajeRoutes from './routes/mensajeRoutes';
 
 
 const app = express();
@@ -25,5 +26,6 @@ mongoose.connect('mongodb://localhost:27017/ejercicio1')
 // Rutas
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/asignaturas', asignaturaRoutes);
+app.use('/api/mensaje', mensajeRoutes);
 
 export default app;
